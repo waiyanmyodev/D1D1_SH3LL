@@ -98,15 +98,15 @@ read build_folder_path
 echo "Enter your app name for pm2 : " 
 read app_name
 
-pm2 start $build_folder_path --name $app_name
+sudo pm2 start $build_folder_path --name $app_name
 
 
 # save the app and open the pm2 when system startup 
-pm2 save
-pm2 startup systemd
+sudo pm2 save
+sudo pm2 startup systemd
 sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u $USER --hp $HOME
 
-# get the server public ip 
+# get the server public  ip 
 server_ip=$(curl ifconfig.me)
 
 # VirtualHost configuration with placeholders replaced
@@ -124,7 +124,7 @@ virtualhost_config="
 </VirtualHost>"
 
 
-echo "$virtualhost_config" >> /etc/apache2/sites-available/$app_name.conf
+sudo echo "$virtualhost_config" >> /etc/apache2/sites-available/$app_name.conf
 
 sudo a2ensite $app_name.conf
 
